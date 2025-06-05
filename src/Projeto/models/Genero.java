@@ -4,6 +4,7 @@ public enum Genero {
 
     MASCULINO,
     FEMININO,
-    OUTROS
+    OUTROS,
+    teste
     
 }
