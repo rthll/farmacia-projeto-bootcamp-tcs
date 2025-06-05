@@ -1,4 +1,4 @@
-package projeto;
+package Projeto;
 
 public class Farmacia {
     private String nome;

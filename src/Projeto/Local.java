@@ -1,4 +1,4 @@
-package projeto;
+package Projeto;
 
 public enum Local {
     AC("Acre"),
