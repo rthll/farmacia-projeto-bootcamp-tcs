@@ -1,4 +1,4 @@
-package Projeto;
+package Projeto.models;
 
 public class Farmacia {
     private String nome;
