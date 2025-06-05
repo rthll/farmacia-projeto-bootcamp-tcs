@@ -1,4 +1,4 @@
-package Projeto.models;
+package projeto.models;
 
 import java.util.EnumSet;
 
@@ -7,6 +7,10 @@ public class Transportadora {
     private String cnpjFarmacia;
     private String nome;
     private EnumSet<Local> locaisAtendidos;
+
+    public String getCnpjFarmacia() {
+        return cnpjFarmacia;
+    }
 
     public Transportadora() {
         locaisAtendidos = EnumSet.noneOf(Local.class);

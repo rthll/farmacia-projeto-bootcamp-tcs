@@ -1,8 +1,8 @@
-package Projeto.models;
+package projeto.models;
 
 public class Farmacia {
     private String nome;
-    private String cnpj;
+    private String cnpjFarmacia;
     private int id;
 
     public String getNome() {
@@ -18,12 +18,12 @@ public class Farmacia {
     }
 
     public String getCnpj() {
-        return cnpj;
+        return cnpjFarmacia;
     }
 
-    public Farmacia(String nome, String cnpj, int id) {
+    public Farmacia(String nome, String cnpjFarmacia, int id) {
         this.nome = nome;
-        this.cnpj = cnpj;
+        this.cnpjFarmacia = cnpjFarmacia;
         this.id = id;
     }
 }
