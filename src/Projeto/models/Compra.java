@@ -1,4 +1,4 @@
-package Projeto.models;
+package projeto.models;
 
 import java.time.LocalDate;
 
@@ -7,6 +7,14 @@ public class Compra {
     private int idCompra;
     private int idFuncionario;
     private LocalDate dataCompra;
+    private String cnpjFarmacia;
+
+    
+    public String getCnpjFarmacia() {
+
+        return cnpjFarmacia;
+
+    }
 
 
     public Compra() {

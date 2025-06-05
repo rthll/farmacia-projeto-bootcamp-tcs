@@ -1,4 +1,4 @@
-package Projeto.models;
+package projeto.models;
 
 public class Produto {
     
@@ -17,7 +17,7 @@ public class Produto {
         this.valorCusto = 0;
     }
 
-    public String getcnpjFarmacia() {
+    public String getCnpjFarmacia() {
 
         return cnpjFarmacia;
 

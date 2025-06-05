@@ -1,4 +1,4 @@
-package Projeto.models;
+package projeto.models;
 
 public class Funcionario {
 
@@ -17,14 +17,19 @@ public class Funcionario {
         this.idade = 0;
         this.genero = null;
         this.salario = 0;
+        
+    }
+    
+    public String getCnpjFarmacia() {
+        
+        return cnpjFarmacia;
 
     }
 
-
     public void setNome(String nome) {
-
+        
         this.nome = nome;
-
+        
     }
 
     public String getNome() {
@@ -82,11 +87,6 @@ public class Funcionario {
 
     }
 
-    public int getIDFarmacia() {
-     
-        return 0;
-
-    }
 
 
 
