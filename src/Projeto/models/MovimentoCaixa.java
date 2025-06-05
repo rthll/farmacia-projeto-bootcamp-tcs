@@ -1,6 +1,5 @@
 package Projeto.models;
 
-import projeto.Venda;
 
 import java.util.ArrayList;
 
