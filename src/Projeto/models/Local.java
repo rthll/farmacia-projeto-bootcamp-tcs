@@ -1,4 +1,4 @@
-package Projeto;
+package Projeto.models;
 
 public enum Local {
     AC("Acre"),
