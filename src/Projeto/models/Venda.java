@@ -5,8 +5,14 @@ public class Venda {
     private int idVendaProduto;
     private int idVenda;
     private int idFuncionario;
-    
-    
+
+    public Venda(String cnpjFarmacia, int idVendaProduto, int idVenda, int idFuncionario) {
+        this.cnpjFarmacia = cnpjFarmacia;
+        this.idVendaProduto = idVendaProduto;
+        this.idVenda = idVenda;
+        this.idFuncionario = idFuncionario;
+    }
+
     public Venda() {
         
         this.idVendaProduto = 0;
