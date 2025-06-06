@@ -39,15 +39,10 @@ CREATE TABLE Produto (
     nomeProduto VARCHAR(150) NOT NULL,
     valorVenda NUMERIC(10,2) NOT NULL CHECK (valorVenda >= 0),
     valorCusto NUMERIC(10,2) NOT NULL CHECK (valorCusto >= 0),
+	quantidade INT NOT NULL DEFAULT 0 CHECK (quantidade >= 0),
     idFarmacia INT REFERENCES Farmacia(idFarmacia) ON DELETE CASCADE
 );
 
-CREATE TABLE Estoque (
-    idProduto INT REFERENCES Produto(idProduto) ON DELETE CASCADE,
-    idFarmacia INT REFERENCES Farmacia(idFarmacia) ON DELETE CASCADE,
-    saldoEstoque INT NOT NULL CHECK (saldoEstoque >= 0),
-    PRIMARY KEY (idProduto, idFarmacia)
-);
 
 CREATE TABLE Venda (
     idVenda SERIAL PRIMARY KEY,
@@ -143,41 +138,23 @@ INSERT INTO Funcionario (nomeCompleto, idade, genero, idSetor, salarioBase, impo
 ('Camila Ferreira', 27, 'Feminino', 9, 4600.00, 460.00, 220.00, 3),
 ('Tiago Mendes', 29, 'Masculino', 8, 2500.00, 250.00, 100.00, 3);
 
-INSERT INTO Produto (nomeProduto, valorVenda, valorCusto, idFarmacia) VALUES
-('Dipirona 500mg', 10.00, 5.00, 1),
-('Paracetamol 750mg', 12.50, 6.00, 1),
-('Amoxicilina 250mg', 30.00, 15.00, 1),
-('Protetor Solar FPS50', 55.00, 30.00, 1);
+INSERT INTO Produto (nomeProduto, valorVenda, valorCusto, idFarmacia, quantidade) VALUES
+('Dipirona 500mg', 10.00, 5.00, 1, 100),
+('Paracetamol 750mg', 12.50, 6.00, 1, 100),
+('Amoxicilina 250mg', 30.00, 15.00, 1, 100),
+('Protetor Solar FPS50', 55.00, 30.00, 1, 100);
 
-INSERT INTO Produto (nomeProduto, valorVenda, valorCusto, idFarmacia) VALUES
-('Ibuprofeno 400mg', 15.00, 7.00, 2),
-('Vitamina C Efervescente', 25.00, 12.00, 2),
-('Xarope Expectorante Adulto', 22.00, 10.00, 2),
-('Fralda Descartável Pct M', 40.00, 25.00, 2);
+INSERT INTO Produto (nomeProduto, valorVenda, valorCusto, idFarmacia, quantidade) VALUES
+('Ibuprofeno 400mg', 15.00, 7.00, 2, 100),
+('Vitamina C Efervescente', 25.00, 12.00, 2, 100),
+('Xarope Expectorante Adulto', 22.00, 10.00, 2, 100),
+('Fralda Descartável Pct M', 40.00, 25.00, 2, 100);
 
-INSERT INTO Produto (nomeProduto, valorVenda, valorCusto, idFarmacia) VALUES
-('Dorflex Cx 10 Comp', 8.50, 4.00, 3),
-('Soro Fisiológico 500ml', 7.00, 3.00, 3),
-('Água Oxigenada Vol 10', 5.00, 2.00, 3),
-('Curativo Adesivo Cx 20', 12.00, 6.50, 3);
-
-INSERT INTO Estoque (idProduto, idFarmacia, saldoEstoque) VALUES
-(1, 1, 100),
-(2, 1, 150),
-(3, 1, 50),
-(4, 1, 70);
-
-INSERT INTO Estoque (idProduto, idFarmacia, saldoEstoque) VALUES
-(5, 2, 120),
-(6, 2, 200),
-(7, 2, 80),
-(8, 2, 90);
-
-INSERT INTO Estoque (idProduto, idFarmacia, saldoEstoque) VALUES
-(9, 3, 90),
-(10, 3, 250),
-(11, 3, 180),
-(12, 3, 60);
+INSERT INTO Produto (nomeProduto, valorVenda, valorCusto, idFarmacia, quantidade) VALUES
+('Dorflex Cx 10 Comp', 8.50, 4.00, 3, 100),
+('Soro Fisiológico 500ml', 7.00, 3.00, 3, 100),
+('Água Oxigenada Vol 10', 5.00, 2.00, 3, 100),
+('Curativo Adesivo Cx 20', 12.00, 6.50, 3, 100);
 
 INSERT INTO Venda (idFuncionario, dataVenda, totalVenda, idFarmacia) VALUES
 (1, '2025-05-01', 42.50, 1),
@@ -192,30 +169,30 @@ INSERT INTO Venda (idFuncionario, dataVenda, totalVenda, idFarmacia) VALUES
 (9, '2025-05-06', 12.00, 3);
 
 INSERT INTO VendaProdutos (idVenda, idProduto, qtdVendaProduto, valorVendaProduto) VALUES
-(1, 1, 2, 10.00), -- 2 Dipironas
-(1, 2, 1, 12.50); -- 1 Paracetamol
+(1, 1, 2, 10.00), 
+(1, 2, 1, 12.50); 
 UPDATE Venda SET totalVenda = (SELECT SUM(qtdVendaProduto * valorVendaProduto) FROM VendaProdutos WHERE idVenda = 1) WHERE idVenda = 1;
 
 INSERT INTO VendaProdutos (idVenda, idProduto, qtdVendaProduto, valorVendaProduto) VALUES
-(2, 4, 1, 55.00); -- 1 Protetor Solar
+(2, 4, 1, 55.00); 
 UPDATE Venda SET totalVenda = (SELECT SUM(qtdVendaProduto * valorVendaProduto) FROM VendaProdutos WHERE idVenda = 2) WHERE idVenda = 2;
 
 INSERT INTO VendaProdutos (idVenda, idProduto, qtdVendaProduto, valorVendaProduto) VALUES
-(3, 5, 1, 15.00), -- 1 Ibuprofeno
-(3, 6, 1, 25.00); -- 1 Vitamina C
+(3, 5, 1, 15.00),
+(3, 6, 1, 25.00); 
 UPDATE Venda SET totalVenda = (SELECT SUM(qtdVendaProduto * valorVendaProduto) FROM VendaProdutos WHERE idVenda = 3) WHERE idVenda = 3;
 
 INSERT INTO VendaProdutos (idVenda, idProduto, qtdVendaProduto, valorVendaProduto) VALUES
-(4, 7, 1, 22.00); -- 1 Xarope
+(4, 7, 1, 22.00); 
 UPDATE Venda SET totalVenda = (SELECT SUM(qtdVendaProduto * valorVendaProduto) FROM VendaProdutos WHERE idVenda = 4) WHERE idVenda = 4;
 
 INSERT INTO VendaProdutos (idVenda, idProduto, qtdVendaProduto, valorVendaProduto) VALUES
-(5, 9, 1, 8.50),  -- 1 Dorflex
-(5, 10, 1, 7.00); -- 1 Soro Fisiológico
+(5, 9, 1, 8.50), 
+(5, 10, 1, 7.00);
 UPDATE Venda SET totalVenda = (SELECT SUM(qtdVendaProduto * valorVendaProduto) FROM VendaProdutos WHERE idVenda = 5) WHERE idVenda = 5;
 
 INSERT INTO VendaProdutos (idVenda, idProduto, qtdVendaProduto, valorVendaProduto) VALUES
-(6, 12, 1, 12.00); -- 1 Curativo
+(6, 12, 1, 12.00); 
 UPDATE Venda SET totalVenda = (SELECT SUM(qtdVendaProduto * valorVendaProduto) FROM VendaProdutos WHERE idVenda = 6) WHERE idVenda = 6;
 
 INSERT INTO Compra (idFuncionario, dataCompra, totalCompra, idFarmacia) VALUES
@@ -229,22 +206,22 @@ INSERT INTO Compra (idFuncionario, dataCompra, totalCompra, idFarmacia) VALUES
 (9, '2025-04-28', 107.50, 3);
 
 INSERT INTO CompraProdutos (idCompra, idProduto, qtdCompraProduto, valorCompraProduto) VALUES
-(1, 1, 20, 5.00), -- 20 Dipironas a 5.00
-(1, 3, 5, 15.00);  -- 5 Amoxicilina a 15.00
+(1, 1, 20, 5.00),
+(1, 3, 5, 15.00); 
 UPDATE Compra SET totalCompra = (SELECT SUM(qtdCompraProduto * valorCompraProduto) FROM CompraProdutos WHERE idCompra = 1) WHERE idCompra = 1;
 
 INSERT INTO CompraProdutos (idCompra, idProduto, qtdCompraProduto, valorCompraProduto) VALUES
-(2, 2, 15, 6.00); -- 15 Paracetamol a 6.00
+(2, 2, 15, 6.00);
 UPDATE Compra SET totalCompra = (SELECT SUM(qtdCompraProduto * valorCompraProduto) FROM CompraProdutos WHERE idCompra = 2) WHERE idCompra = 2;
 
 INSERT INTO CompraProdutos (idCompra, idProduto, qtdCompraProduto, valorCompraProduto) VALUES
-(3, 5, 10, 7.00), -- 10 Ibuprofeno a 7.00
-(3, 8, 3, 25.00);  -- 3 Fralda a 25.00
+(3, 5, 10, 7.00), 
+(3, 8, 3, 25.00);  
 UPDATE Compra SET totalCompra = (SELECT SUM(qtdCompraProduto * valorCompraProduto) FROM CompraProdutos WHERE idCompra = 3) WHERE idCompra = 3;
 
 INSERT INTO CompraProdutos (idCompra, idProduto, qtdCompraProduto, valorCompraProduto) VALUES
-(4, 9, 10, 4.00),  -- 10 Dorflex a 4.00
-(4, 12, 5, 6.50); -- 5 Curativo a 6.50
+(4, 9, 10, 4.00),  
+(4, 12, 5, 6.50); 
 UPDATE Compra SET totalCompra = (SELECT SUM(qtdCompraProduto * valorCompraProduto) FROM CompraProdutos WHERE idCompra = 4) WHERE idCompra = 4;
 
 INSERT INTO Transportadora (nome) VALUES
@@ -284,3 +261,93 @@ INSERT INTO Caixa (valorInicial, valorAtual, idFarmacia) VALUES
 
 INSERT INTO Caixa (valorInicial, valorAtual, idFarmacia) VALUES
 (450000.00, 9800.20, 3);
+
+-- querys gerais para o uso do banco
+-- retorna dados dos funcionarios de uma determinada farmacia
+SELECT
+    Fc.idFuncionario,
+    Fc.nomeCompleto AS "Nome do Funcionário",
+    Fc.idade,
+    Fc.genero,
+    S.nome AS "Nome do Setor",
+    Fa.nome AS "Nome da Farmácia",
+    Fa.cnpj AS "CNPJ da Farmácia",
+    Fc.salarioBase AS "Salário Base (R$)"
+FROM
+    Funcionario Fc
+JOIN
+    Setor S ON Fc.idSetor = S.idSetor
+JOIN
+    Farmacia Fa ON Fc.idFarmacia = Fa.idFarmacia
+WHERE
+    Fa.cnpj = '11.222.333/0001-44'
+ORDER BY
+    Fc.nomeCompleto;
+
+-- retorna os setores com a quantidade de funcionarios e os valores de beneficios de cad asetor
+SELECT
+    S.nome,
+    COUNT(F.idFuncionario),
+    S.valeRefeicao,
+    S.valeAlimentacao,
+    S.planoSaude,
+    S.planoOdonto,
+    S.valeTransporte
+FROM
+    Setor S
+JOIN
+    Farmacia Fa ON S.idFarmacia = Fa.idFarmacia
+LEFT JOIN
+    Funcionario F ON S.idSetor = F.idSetor
+WHERE
+    Fa.cnpj = '11.222.333/0001-44'
+GROUP BY
+    S.idSetor, 
+    S.nome,
+    S.valeRefeicao,
+    S.valeAlimentacao,
+    S.planoSaude,
+    S.planoOdonto,
+    S.valeTransporte
+ORDER BY
+    S.nome;
+	
+-- retorna as transportadoras com os respectivos estados em que atende
+SELECT * FROM coberturaTransportadora ct JOIN transportadora ta ON ct.idtransportadora = ta.idtransportadora;
+
+-- retorna as vendas com data de venda posterior a data atual
+SELECT
+    V.idVenda AS "ID da Venda",
+    V.dataVenda AS "Data da Venda",
+    Fa.nome AS "Farmácia",
+    P.nomeProduto AS "Produto Vendido",
+    COALESCE(Fu.nomeCompleto, 'N/D') AS "Vendedor",
+    VP.qtdVendaProduto AS "Quantidade",
+    VP.valorVendaProduto AS "Valor Unitário (R$)",
+    (VP.qtdVendaProduto * VP.valorVendaProduto) AS "Subtotal do Produto (R$)"
+FROM
+    Venda V
+JOIN
+    VendaProdutos VP ON V.idVenda = VP.idVenda
+JOIN
+    Produto P ON VP.idProduto = P.idProduto
+JOIN
+    Farmacia Fa ON V.idFarmacia = Fa.idFarmacia
+LEFT JOIN
+    Funcionario Fu ON V.idFuncionario = Fu.idFuncionario
+WHERE
+    V.dataVenda <= CURRENT_DATE
+    AND Fa.cnpj = '11.222.333/0001-44' -- Substitua pelo CNPJ da Farmácia desejada
+ORDER BY
+    V.dataVenda DESC, V.idVenda DESC;
+
+
+-- 20. Retornar o somatório total de todas as vendas de uma farmácia específica
+SELECT
+    SUM(V.totalVenda) AS "Total Vendido na Farmácia (R$)"
+FROM
+    Venda V
+JOIN
+    Farmacia F ON V.idFarmacia = F.idFarmacia
+WHERE
+    F.cnpj = '11.222.333/0001-44'; -- Substitua pelo CNPJ da Farmácia desejada
