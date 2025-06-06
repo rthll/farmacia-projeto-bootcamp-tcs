@@ -29,8 +29,6 @@ CREATE TABLE Funcionario (
     genero genero_enum,
     idSetor INT REFERENCES Setor(idSetor) ON DELETE SET NULL,
     salarioBase NUMERIC(10,2) NOT NULL CHECK (salarioBase >= 0),
-    imposto NUMERIC(10,2) CHECK (imposto >= 0),
-    bonificacao NUMERIC(10,2) DEFAULT 0.00 CHECK (bonificacao >= 0),
     idFarmacia INT REFERENCES Farmacia(idFarmacia) ON DELETE CASCADE
 );
 
@@ -263,6 +261,21 @@ INSERT INTO Caixa (valorInicial, valorAtual, idFarmacia) VALUES
 (450000.00, 9800.20, 3);
 
 -- querys gerais para o uso do banco
+
+-- retorna quantidade de produtos presentes no estoque, o nome dos produtos e o valor
+SELECT
+    P.nomeProduto AS "Nome do Produto",
+    P.quantidade AS "Quantidade em Estoque",
+    P.valorVenda AS "Valor de Venda (R$)"
+FROM
+    Produto P
+JOIN
+    Farmacia Fa ON P.idFarmacia = Fa.idFarmacia
+WHERE
+    Fa.cnpj = '11.222.333/0001-44'
+ORDER BY
+    P.nomeProduto;
+	
 -- retorna dados dos funcionarios de uma determinada farmacia
 SELECT
     Fc.idFuncionario,
@@ -284,65 +297,61 @@ WHERE
 ORDER BY
     Fc.nomeCompleto;
 
+
 -- retorna os setores com a quantidade de funcionarios e os valores de beneficios de cad asetor
 SELECT
-    S.nome,
-    COUNT(F.idFuncionario),
-    S.valeRefeicao,
-    S.valeAlimentacao,
-    S.planoSaude,
-    S.planoOdonto,
-    S.valeTransporte
+    Fa.nome AS "Nome da Farmácia",
+    S.nome AS "Nome do Setor",
+    COUNT(F.idFuncionario) OVER (PARTITION BY S.idSetor) AS "Funcionários no Setor",
+    F.idFuncionario AS "ID do Funcionário",
+    F.nomeCompleto AS "Nome do Funcionário",
+    F.idade AS "Idade",
+    F.genero AS "Gênero",
+    F.salarioBase AS "Salário Base (R$)",
+    S.valeRefeicao AS "Vale Refeição (R$)",
+    S.valeAlimentacao AS "Vale Alimentação (R$)",
+    S.planoSaude AS "Plano de Saúde (R$)",
+    S.planoOdonto AS "Plano Odontológico (R$)",
+    S.valeTransporte AS "Vale Transporte (R$)"
 FROM
-    Setor S
+    Funcionario F
 JOIN
-    Farmacia Fa ON S.idFarmacia = Fa.idFarmacia
-LEFT JOIN
-    Funcionario F ON S.idSetor = F.idSetor
+    Setor S ON F.idSetor = S.idSetor
+JOIN
+    Farmacia Fa ON F.idFarmacia = Fa.idFarmacia
+WHERE
+    Fa.cnpj = '11.222.333/0001-44' 
+ORDER BY
+    S.nome, F.nomeCompleto;
+	
+-- salarios respectivos de cada funcionário (com os valores de imposto, vale transporte, vale refeição e alimentação, planos de saúde e odontológico,) e as bonificações por participação nos lucros da empresa;
+SELECT
+    Fa.nome AS "Nome da Farmácia",
+    S.nome AS "Nome do Setor",
+    COUNT(F.idFuncionario) OVER (PARTITION BY S.idSetor) AS "Funcionários no Setor",
+    F.idFuncionario AS "ID do Funcionário",
+    F.nomeCompleto AS "Nome do Funcionário",
+    F.salarioBase AS "Salário Base (R$)",
+    S.valeRefeicao AS "Vale Refeição (R$)",
+    S.valeAlimentacao AS "Vale Alimentação (R$)",
+    S.planoSaude AS "Plano de Saúde (R$)",
+    S.planoOdonto AS "Plano Odontológico (R$)",
+    S.valeTransporte AS "Vale Transporte (R$)"
+FROM
+    Funcionario F
+JOIN
+    Setor S ON F.idSetor = S.idSetor
+JOIN
+    Farmacia Fa ON F.idFarmacia = Fa.idFarmacia
 WHERE
     Fa.cnpj = '11.222.333/0001-44'
-GROUP BY
-    S.idSetor, 
-    S.nome,
-    S.valeRefeicao,
-    S.valeAlimentacao,
-    S.planoSaude,
-    S.planoOdonto,
-    S.valeTransporte
 ORDER BY
-    S.nome;
-	
--- retorna as transportadoras com os respectivos estados em que atende
+    S.nome, F.nomeCompleto;
+
+-- Quantidade de transportadoras parceiras e seus respectivos locais de atendimento no estado (Pelos menos 3 transportadoras devem estar presentes no código)
 SELECT * FROM coberturaTransportadora ct JOIN transportadora ta ON ct.idtransportadora = ta.idtransportadora;
 
--- retorna as vendas com data de venda posterior a data atual
-SELECT
-    V.idVenda AS "ID da Venda",
-    V.dataVenda AS "Data da Venda",
-    Fa.nome AS "Farmácia",
-    P.nomeProduto AS "Produto Vendido",
-    COALESCE(Fu.nomeCompleto, 'N/D') AS "Vendedor",
-    VP.qtdVendaProduto AS "Quantidade",
-    VP.valorVendaProduto AS "Valor Unitário (R$)",
-    (VP.qtdVendaProduto * VP.valorVendaProduto) AS "Subtotal do Produto (R$)"
-FROM
-    Venda V
-JOIN
-    VendaProdutos VP ON V.idVenda = VP.idVenda
-JOIN
-    Produto P ON VP.idProduto = P.idProduto
-JOIN
-    Farmacia Fa ON V.idFarmacia = Fa.idFarmacia
-LEFT JOIN
-    Funcionario Fu ON V.idFuncionario = Fu.idFuncionario
-WHERE
-    V.dataVenda <= CURRENT_DATE
-    AND Fa.cnpj = '11.222.333/0001-44' -- Substitua pelo CNPJ da Farmácia desejada
-ORDER BY
-    V.dataVenda DESC, V.idVenda DESC;
-
-
--- 20. Retornar o somatório total de todas as vendas de uma farmácia específica
+-- Retornar o somatório total de todas as vendas de uma farmácia específica
 SELECT
     SUM(V.totalVenda) AS "Total Vendido na Farmácia (R$)"
 FROM
@@ -350,4 +359,46 @@ FROM
 JOIN
     Farmacia F ON V.idFarmacia = F.idFarmacia
 WHERE
-    F.cnpj = '11.222.333/0001-44'; -- Substitua pelo CNPJ da Farmácia desejada
+    F.cnpj = '11.222.333/0001-44'; 
+
+-- query que deve apresentar um valor total do caixa da empresa e deve apresentar uma estimativa de lucros mensais e anuais com base nas vendas programadas pelos vendedores;
+WITH LucroPeriodo AS (
+    SELECT
+        V.idFarmacia,
+        SUM(V.totalVenda) AS total_vendido_periodo,
+        SUM(VP.qtdVendaProduto * P.valorCusto) AS custo_total_produtos_vendidos,
+        GREATEST( (MAX(V.dataVenda)::date - MIN(V.dataVenda)::date) + 1, 1) AS dias_no_periodo
+    FROM
+        Venda V
+    JOIN VendaProdutos VP ON V.idVenda = VP.idVenda
+    JOIN Produto P ON VP.idProduto = P.idProduto
+    GROUP BY
+        V.idFarmacia
+),
+VendasUltimos30Dias AS (
+    SELECT
+        V.idFarmacia,
+        SUM(V.totalVenda) AS total_vendido_ultimos_30_dias
+    FROM
+        Venda V
+    WHERE
+        V.dataVenda >= (CURRENT_DATE - INTERVAL '30 days') AND V.dataVenda <= CURRENT_DATE
+    GROUP BY
+        V.idFarmacia
+)
+SELECT
+    Fa.nome AS "Nome da Farmácia",
+    (SELECT SUM(C.valorAtual) FROM Caixa C WHERE C.idFarmacia = Fa.idFarmacia) AS "Valor Total em Caixa (R$)",
+    COALESCE(LP.total_vendido_periodo, 0) AS "Total de Vendas Registradas (R$)",
+    COALESCE(V30.total_vendido_ultimos_30_dias, 0) AS "Vendas nos Últimos 30 Dias (R$)",
+    COALESCE((LP.total_vendido_periodo - LP.custo_total_produtos_vendidos), 0) AS "Lucro Bruto no Período Registrado (R$)",
+    ROUND( (COALESCE((LP.total_vendido_periodo - LP.custo_total_produtos_vendidos), 0) / NULLIF(LP.dias_no_periodo, 0)) * 365, 2) AS "Estimativa de Lucro Anual (R$)"
+FROM
+    Farmacia Fa
+LEFT JOIN 
+    LucroPeriodo LP ON Fa.idFarmacia = LP.idFarmacia
+LEFT JOIN
+    VendasUltimos30Dias V30 ON Fa.idFarmacia = V30.idFarmacia
+WHERE
+    Fa.cnpj = '11.222.333/0001-44';
+
