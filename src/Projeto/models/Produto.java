@@ -9,6 +9,14 @@ public class Produto {
     private double valorVenda;
     private double valorCusto;
 
+    public Produto(String cnpjFarmacia, String nomeProduto, int idProduto, double qtdProduto, double valorVenda, double valorCusto) {
+        this.cnpjFarmacia = cnpjFarmacia;
+        this.nomeProduto = nomeProduto;
+        this.idProduto = idProduto;
+        this.qtdProduto = qtdProduto;
+        this.valorVenda = valorVenda;
+        this.valorCusto = valorCusto;
+    }
 
     public Produto() {
         this.idProduto = 0;
