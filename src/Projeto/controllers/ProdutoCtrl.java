@@ -19,10 +19,11 @@ public class ProdutoCtrl {
             throw new RuntimeException(e);
         }
     }
-    public double calcularValorVenda(int idProduto) {
+    public double calcularValorEstoque(int idProduto) {
         try{
-        double valorVenda = daoProduto.somarProdutos(idProduto);
-        return valorVenda;} catch (Exception e) {
+        double valorEstoque = daoProduto.somarProdutos(idProduto);
+        return valorEstoque;
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
