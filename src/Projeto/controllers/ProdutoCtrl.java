@@ -11,11 +11,18 @@ public class ProdutoCtrl {
         daoProduto = new ProdutoDAO;
     }
 
-    public void registrarProduto(String nomeProduto, int idProduto, double qtdProduto, double valorVenda, double valorCusto) {
+    public void registrarProduto(String nomeProduto, int idProduto, double valorVenda, double valorCusto) {
         try {
-            Produto produto = new Produto(dao.getCnpjLogado, nomeProduto, idProduto, qtdProduto, valorVenda, valorCusto);
+            Produto produto = new Produto(dao.getCnpjLogado, nomeProduto, idProduto, valorVenda, valorCusto);
             daoProduto.criarProduto(produto);
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public double calcularValorVenda(int idProduto) {
+        try{
+        double valorVenda = daoProduto.somarProdutos(idProduto);
+        return valorVenda;} catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

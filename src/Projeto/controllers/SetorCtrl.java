@@ -19,5 +19,5 @@ public class SetorCtrl {
             throw new RuntimeException(e);
         }
     }
-    
+
 }
