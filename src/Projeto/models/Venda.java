@@ -1,4 +1,4 @@
-package Projeto.models;
+package projeto.models;
 
 public class Venda {
     private String cnpjFarmacia;
