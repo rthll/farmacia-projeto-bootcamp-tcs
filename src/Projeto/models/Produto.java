@@ -1,4 +1,4 @@
-package projeto.models;
+package Projeto.models;
 
 public class Produto {
     
