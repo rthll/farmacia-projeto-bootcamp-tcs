@@ -1,23 +1,19 @@
-package Projeto.controllers;
+package Controllers;
 
-import Projeto.models.Produto;
+import Models.Farmacia;
+import Models.Produto;
+import dao.ProdutoDAO;
 
 public class ProdutoCtrl {
-    SessaoDAO dao;
-    ProdutoDAO daoProduto;
+    private ProdutoDAO dao;
 
     public ProdutoCtrl() {
-        dao = new SessaoDAO;
-        daoProduto = new ProdutoDAO;
+        this.dao = new ProdutoDAO();
     }
 
-    public void registrarProduto(String nomeProduto, int idProduto, double valorVenda, double valorCusto) {
-        try {
-            Produto produto = new Produto(dao.getCnpjLogado, nomeProduto, idProduto, valorVenda, valorCusto);
-            daoProduto.criarProduto(produto);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public void registrarProduto(String nomeProduto, double valorVenda, double valorCusto) {
+        Produto produto = new Produto(Sessao.getCnpjFarmaciaLogada(), nomeProduto, idProduto, valorVenda, valorCusto);
+        dao.criarProduto(produto);
     }
     public double calcularValorEstoque(int idProduto) {
         try{
