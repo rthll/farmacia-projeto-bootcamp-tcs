@@ -1,11 +1,11 @@
-package projeto.controllers;
+package Projeto.controllers;
 
 import java.util.List;
-import projeto.models.Farmacia;
-import projeto.models.Setor;
-import projeto.models.Transportadora;
-import projeto.utils.ValidadorCNPJ;
-
+import Projeto.models.Farmacia;
+import Projeto.models.Setor;
+import Projeto.models.Transportadora;
+import Projeto.utils.ValidadorCNPJ;
+import Projeto.dtos.*;
 
 public class FarmaciaCtrl {
     
@@ -54,19 +54,31 @@ public class FarmaciaCtrl {
 
     public List<Setor> listarSetores() {
 
-        return dao.listarSetoresPorFarmacia(Sessao.getCnpjFarmacia());
+        return dao.listarSetoresCnpj(Sessao.getCnpjFarmacia());
 
     }
 
     public List<Transportadora> listaTransportadoras() {
 
-        return dao.listarTransportadorasPorFarmacia(Sessao.getCnpjFarmacia());
+        return dao.listarTransportadorasCnpj(Sessao.getCnpjFarmacia());
 
     }
 
-    public List<Farmacia> listarFarmacias() {
+    public List<CompraListagemDTO> listarCompras() {
 
-        return dao.listarFarmacias
+        return dao.listarComprasCnpj(Sessao.getCnpjFarmacia());
+
+    }
+
+    public List<VendaListagemDTO> listarVendas() {
+
+        return dao.listarVendasCnpj(Sessao.getCnpjFarmacia());
+        
+    }
+
+    public List<LucroMensalDTO> listarLucrosMensais() {
+
+        return dao.listarLucrosMensaisCnpj(Sessao.getCnpjFarmacia());
         
     }
 
