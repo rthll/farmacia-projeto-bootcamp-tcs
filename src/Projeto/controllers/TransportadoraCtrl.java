@@ -1,7 +1,7 @@
 package Projeto.controllers;
 
-import Projeto.dao.TransportadoraDAO;
-import Projeto.dto.TransportadoraDTO;
+import Projeto.daos.TransportadoraDAO;
+import Projeto.dtos.TransportadoraDTO;
 import Projeto.models.Estado;
 import Projeto.models.Transportadora;
 
@@ -9,11 +9,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
-public class TransportadoraController {
+public class TransportadoraCtrl {
 
     private TransportadoraDAO transportadoraDAO;
 
-    public TransportadoraController(Connection connection) {
+    public TransportadoraCtrl(Connection connection) {
         this.transportadoraDAO = new TransportadoraDAO(connection);
     }
 

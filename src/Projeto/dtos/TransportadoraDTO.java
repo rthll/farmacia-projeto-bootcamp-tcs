@@ -1,4 +1,4 @@
-package Projeto.dto;
+package Projeto.dtos;
 
 import java.util.Set;
 

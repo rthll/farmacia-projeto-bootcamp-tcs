@@ -1,4 +1,4 @@
-package Projeto.dao;
+package Projeto.daos;
 
 import Projeto.models.Estado;
 import Projeto.models.Transportadora;
@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 
 public class TransportadoraDAO {
 
