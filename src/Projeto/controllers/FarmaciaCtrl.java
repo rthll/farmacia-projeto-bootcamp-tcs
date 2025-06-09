@@ -79,7 +79,7 @@ public class FarmaciaCtrl {
     public List<LucroMensalDTO> listarLucrosMensais() {
 
         return dao.listarLucrosMensaisCnpj(Sessao.getCnpjFarmacia());
-
+        
     }
 
     
