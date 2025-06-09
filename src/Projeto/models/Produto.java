@@ -1,4 +1,4 @@
-package projeto.models;
+package Projeto.models;
 
 public class Produto {
     
@@ -9,6 +9,14 @@ public class Produto {
     private double valorVenda;
     private double valorCusto;
 
+    public Produto(String cnpjFarmacia, String nomeProduto, int idProduto, double valorVenda, double valorCusto) {
+        this.cnpjFarmacia = cnpjFarmacia;
+        this.nomeProduto = nomeProduto;
+        this.idProduto = idProduto;
+        this.qtdProduto = 0;
+        this.valorVenda = valorVenda;
+        this.valorCusto = valorCusto;
+    }
 
     public Produto() {
         this.idProduto = 0;
