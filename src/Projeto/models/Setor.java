@@ -1,4 +1,4 @@
-package projeto.models;
+package Projeto.models;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ public class Setor {
     private double valeRefeicao;
     private double valeAlimentacao;
     private double planoSaude;
-    List<Funcionario> funcionarios;
 
     public String getCnpjFarmacia() {
         return cnpjFarmacia;
@@ -33,10 +32,6 @@ public class Setor {
 
     public double getPlanoSaude() {
         return planoSaude;
-    }
-
-    public List<Funcionario> getFuncionarios() {
-        return funcionarios;
     }
 
     public void setCnpjFarmacia(String cnpjFarmacia) {
@@ -63,18 +58,14 @@ public class Setor {
         this.planoSaude = planoSaude;
     }
 
-    public void setFuncionarios(List<Funcionario> funcionarios) {
-        this.funcionarios = funcionarios;
-    }
 
     public Setor(String cnpjFarmacia, String nome, double valeTransporte, double valeRefeicao,
-                 double valeAlimentacao, double planoSaude, List<Funcionario> funcionarios) {
+                 double valeAlimentacao, double planoSaude) {
         this.cnpjFarmacia = cnpjFarmacia;
         this.nome = nome;
         this.valeTransporte = valeTransporte;
         this.valeRefeicao = valeRefeicao;
         this.valeAlimentacao = valeAlimentacao;
         this.planoSaude = planoSaude;
-        this.funcionarios = funcionarios;
     }
 }
