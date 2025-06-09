@@ -1,4 +1,4 @@
-package Projeto.models;
+package projeto.models;
 
 
 import java.util.ArrayList;

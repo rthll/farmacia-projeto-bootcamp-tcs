@@ -1,4 +1,4 @@
-package Projeto.models;
+package projeto.models;
 
 public class produtosVenda {
     private String cnpjFarmacia;
@@ -23,9 +23,6 @@ public class produtosVenda {
         return valorProduto;
     }
 
-    public void setCnpjFarmacia(String cnpjFarmacia) {
-        this.cnpjFarmacia = cnpjFarmacia;
-    }
 
     public void setIdProduto(int idProduto) {
         this.idProduto = idProduto;
