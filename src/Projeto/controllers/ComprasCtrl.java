@@ -1,7 +1,7 @@
-package projeto.controllers;
+package Projeto.controllers;
 
-import projeto.models.Compra;
-import projeto.models.Produto;
+import Projeto.models.Compra;
+import Projeto.models.Produto;
 
 public class ComprasCtrl {
     private double valorCompra;
@@ -36,7 +36,4 @@ public class ComprasCtrl {
         dao = new SessaoDAO();
         daoProduto = new ProdutoDao();
     }
-
-    
-
 }
