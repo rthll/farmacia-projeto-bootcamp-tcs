@@ -1,10 +1,10 @@
-package projeto.controllers;
+package Projeto.controllers;
 
 import java.util.List;
-import projeto.models.Funcionario;
-import projeto.models.Setor;
-import projeto.models.Transportadora;
-import projeto.utils.ValidadorCNPJ;
+import Projeto.models.Funcionario;
+import Projeto.models.Setor;
+import Projeto.models.Transportadora;
+import Projeto.utils.ValidadorCNPJ;
 
 
 public class FuncionarioCtrl {

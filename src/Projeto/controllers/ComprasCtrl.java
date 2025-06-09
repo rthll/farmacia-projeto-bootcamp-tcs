@@ -36,5 +36,4 @@ public class ComprasCtrl {
         dao = new SessaoDAO();
         daoProduto = new ProdutoDao();
     }
-
 }
