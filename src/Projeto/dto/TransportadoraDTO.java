@@ -1,17 +1,12 @@
-package Projeto.models;
+package Projeto.dto;
 
-import java.util.HashSet;
 import java.util.Set;
 
-public class Transportadora {
+public class TransportadoraDTO {
 
     private Integer id;
     private String nome;
-    private Set<Estado> estadosAtendidos; 
-
-    public Transportadora() {
-        this.estadosAtendidos = new HashSet<>();
-    }
+    private Set<String> estadosAtendidos; 
 
     public Integer getId() {
         return id;
@@ -29,12 +24,11 @@ public class Transportadora {
         this.nome = nome;
     }
 
-    public Set<Estado> getEstadosAtendidos() {
+    public Set<String> getEstadosAtendidos() {
         return estadosAtendidos;
     }
 
-    public void setEstadosAtendidos(Set<Estado> estadosAtendidos) {
+    public void setEstadosAtendidos(Set<String> estadosAtendidos) {
         this.estadosAtendidos = estadosAtendidos;
     }
-
 }
