@@ -1,19 +1,32 @@
-package Controllers;
+package projeto.controllers;
 
-import Models.Farmacia;
-import Models.Produto;
-import dao.ProdutoDAO;
+import models.Produto;
+import models.Funcionario;
 
 public class ProdutoCtrl {
-    private ProdutoDAO dao;
+    SessaoDAO dao;
+    ProdutoDAO daoProduto;
 
     public ProdutoCtrl() {
-        this.dao = new ProdutoDAO();
+        dao = new SessaoDAO;
+        daoProduto = new ProdutoDAO;
     }
 
-    public void registrarProduto(String nomeProduto, double valorVenda, double valorCusto) {
-        Produto produto = new Produto(Sessao.getCnpjFarmaciaLogada(), nomeProduto, idProduto, valorVenda, valorCusto);
-        dao.criarProduto(produto);
+    public boolean registrarProduto(String nomeProduto, int idProduto, double valorVenda, double valorCusto, int qtdProduto) {
+     
+        
+        if (nomeProduto == null || nomeProduto.isEmpty() || 
+        valorVenda == 0 ||  valorCusto == 0 ||
+        qtdProduto == 0){
+            
+            return false;
+            
+        }
+        
+        Produto produto = new Produto(dao.getCnpjLogado, nomeProduto, idProduto, valorVenda, valorCusto);
+
+            return daoProduto.criarProduto(produto);
+            
     }
     public double calcularValorEstoque(int idProduto) {
         try{
