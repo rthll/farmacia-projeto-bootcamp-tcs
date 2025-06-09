@@ -1,4 +1,4 @@
-package Projeto.controllers;
+package projeto.controllers;
 
 import java.util.List;
 import projeto.models.Farmacia;
@@ -72,3 +72,7 @@ public class FarmaciaCtrl {
 
     
 }    
+
+
+
+
