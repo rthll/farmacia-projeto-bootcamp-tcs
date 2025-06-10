@@ -26,8 +26,9 @@ public class FuncionarioCtrl {
 
             }
 
+            return dao.adicionar(Funcionario);
 
-            boolean sucesso = dao.adicionar(Funcionario);
+
             
     }
 
@@ -41,33 +42,8 @@ public class FuncionarioCtrl {
     public void cadastrar(String nome, int idade, double salario) {
         
         Funcionario Funcionario = new Funcionario();
-        Funcionario.setNome(nome);
-        Funcionario.setCnpj(cnpjFuncionario);
-        
-    
-        boolean resultado = salvar(Funcionario);
-        System.out.println(resultado);
-
     }
 
-
-    public List<Setor> listarSetores() {
-
-        return dao.listarSetoresPorFuncionario(Sessao.getCnpjFuncionario());
-
-    }
-
-    public List<Transportadora> listaTransportadoras() {
-
-        return dao.listarTransportadorasPorFuncionario(Sessao.getCnpjFuncionario());
-
-    }
-
-    public List<Funcionario> listarFuncionarios() {
-
-        return dao.listarFuncionarios
-        
-    }
 
     public double getImposto(Funcionario Funcionario) {
         if (Funcionario.getSalario() <= 2428.80 && Funcionario.getSalario() > 0) {
@@ -87,6 +63,13 @@ public class FuncionarioCtrl {
 
     public double gerSalarioLiquido(Funcionario Funcionario) {
         return Funcionario.getSalario() - getImposto(Funcionario);
+    }
+
+
+    public boolean apagar(int idFuncionario) {
+     
+        return dao.remover(idFuncionario);
+
     }
 }    
 
