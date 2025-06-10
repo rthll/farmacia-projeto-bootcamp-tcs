@@ -17,25 +17,28 @@ public class FuncionarioCtrl {
 
     }
     
-    public boolean salvar(Funcionario Funcionario) {
-
-        if (Funcionario.getNome() == null || Funcionario.getNome().isEmpty() || 
-            Funcionario.getIdade() == 0 ||  Funcionario.getSalario() == 0 ){
-
-                return false;
-
-            }
-
-            return dao.adicionar(Funcionario);
-
-
+    public boolean salvar(Funcionario funcionario) {
+        
+        if (funcionario == null || 
+            funcionario.getNome() == null || 
+            funcionario.getNome().trim().isEmpty() || 
+            funcionario.getIdade() <= 0 || 
+            funcionario.getSalario() <= 0 || 
+            funcionario.getGenero() == null || 
+            funcionario.getIdSetor() <= 0) {
             
+            return false;
+        }
+        
+        return dao.adicionar(funcionario);
+
     }
-
-
-    public void cadastrar(String nome, int idade, double salario, Genero genero, int idSetor) {
+    
+    
+    public boolean cadastrar(String nome, int idade, double salario, Genero genero, int idSetor) {
         
         Funcionario Funcionario = new Funcionario(nome, idade, salario, genero, idSetor);
+        return salvar(Funcionario);
 
     }
 
