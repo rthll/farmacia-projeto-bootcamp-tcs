@@ -8,15 +8,17 @@ public class Funcionario {
     private Genero genero;
     private double salario;
     private String cnpjFarmacia;
+    private int idSetor;
 
 
-    public Funcionario() {
+    public Funcionario(String nome, int idade, double salario, Genero genero, int idSetor) {
 
-        this.nome = "";
+        this.nome = nome;
         this.id = 0;
-        this.idade = 0;
-        this.genero = null;
-        this.salario = 0;
+        this.idade = idade;
+        this.genero = genero;
+        this.salario = salario;
+        this.idSetor = idSetor;
         
     }
     
@@ -87,6 +89,11 @@ public class Funcionario {
 
     }
 
+    public int getIdSetor() {
+
+        return idSetor;
+
+    }
 
 
 

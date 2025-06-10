@@ -5,7 +5,7 @@ import Projeto.models.Funcionario;
 import Projeto.models.Setor;
 import Projeto.models.Transportadora;
 import Projeto.utils.ValidadorCNPJ;
-
+import Projeto.models.Genero;
 
 public class FuncionarioCtrl {
     
@@ -32,16 +32,11 @@ public class FuncionarioCtrl {
             
     }
 
-    public boolean verificarFuncionario(String cnpjFuncionario) {
 
-        return dao.verificarCnpj(cnpjFuncionario);
+    public void cadastrar(String nome, int idade, double salario, Genero genero, int idSetor) {
         
-    }
-    
+        Funcionario Funcionario = new Funcionario(nome, idade, salario, genero, idSetor);
 
-    public void cadastrar(String nome, int idade, double salario) {
-        
-        Funcionario Funcionario = new Funcionario();
     }
 
 
