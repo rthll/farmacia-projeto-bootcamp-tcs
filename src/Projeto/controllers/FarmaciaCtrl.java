@@ -1,6 +1,6 @@
 package Projeto.controllers;
 
-import java.util.List;
+import java.util.ArrayList;
 import Projeto.models.Farmacia;
 import Projeto.models.Setor;
 import Projeto.models.Transportadora;
@@ -52,31 +52,31 @@ public class FarmaciaCtrl {
     }
 
 
-    public List<Setor> listarSetores() {
+    public ArrayList<Setor> listarSetores() {
 
         return dao.listarSetoresCnpj(Sessao.getCnpjFarmacia());
 
     }
 
-    public List<Transportadora> listaTransportadoras() {
+    public ArrayList<Transportadora> listaTransportadoras() {
 
         return dao.listarTransportadorasCnpj(Sessao.getCnpjFarmacia());
 
     }
 
-    public List<CompraListagemDTO> listarCompras() {
+    public ArrayList<CompraListagemDTO> listarCompras() {
 
         return dao.listarComprasCnpj(Sessao.getCnpjFarmacia());
 
     }
 
-    public List<VendaListagemDTO> listarVendas() {
+    public ArrayList<VendaListagemDTO> listarVendas() {
 
         return dao.listarVendasCnpj(Sessao.getCnpjFarmacia());
         
     }
 
-    public List<LucroMensalDTO> listarLucrosMensais() {
+    public ArrayList<LucroMensalDTO> listarLucrosMensais() {
 
         return dao.listarLucrosMensaisCnpj(Sessao.getCnpjFarmacia());
         
