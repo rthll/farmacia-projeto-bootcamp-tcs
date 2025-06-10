@@ -5,7 +5,7 @@ import Projeto.models.Funcionario;
 import Projeto.models.Setor;
 import Projeto.models.Transportadora;
 import Projeto.utils.ValidadorCNPJ;
-
+import Projeto.models.Genero;
 
 public class FuncionarioCtrl {
     
@@ -17,57 +17,31 @@ public class FuncionarioCtrl {
 
     }
     
-    public boolean salvar(Funcionario Funcionario) {
-
-        if (Funcionario.getNome() == null || Funcionario.getNome().isEmpty() || 
-            Funcionario.getIdade() == 0 ||  Funcionario.getSalario() == 0 ){
-
-                return false;
-
-            }
-
-
-            boolean sucesso = dao.adicionar(Funcionario);
+    public boolean salvar(Funcionario funcionario) {
+        
+        if (funcionario == null || 
+            funcionario.getNome() == null || 
+            funcionario.getNome().trim().isEmpty() || 
+            funcionario.getIdade() <= 0 || 
+            funcionario.getSalario() <= 0 || 
+            funcionario.getGenero() == null || 
+            funcionario.getIdSetor() <= 0) {
             
-    }
-
-    public boolean verificarFuncionario(String cnpjFuncionario) {
-
-        return dao.verificarCnpj(cnpjFuncionario);
+            return false;
+        }
         
+        return dao.adicionar(funcionario);
+
     }
     
-
-    public void cadastrar(String nome, int idade, double salario) {
-        
-        Funcionario Funcionario = new Funcionario();
-        Funcionario.setNome(nome);
-        Funcionario.setCnpj(cnpjFuncionario);
-        
     
-        boolean resultado = salvar(Funcionario);
-        System.out.println(resultado);
-
-    }
-
-
-    public List<Setor> listarSetores() {
-
-        return dao.listarSetoresPorFuncionario(Sessao.getCnpjFuncionario());
-
-    }
-
-    public List<Transportadora> listaTransportadoras() {
-
-        return dao.listarTransportadorasPorFuncionario(Sessao.getCnpjFuncionario());
-
-    }
-
-    public List<Funcionario> listarFuncionarios() {
-
-        return dao.listarFuncionarios
+    public boolean cadastrar(String nome, int idade, double salario, Genero genero, int idSetor) {
         
+        Funcionario Funcionario = new Funcionario(nome, idade, salario, genero, idSetor);
+        return salvar(Funcionario);
+
     }
+
 
     public double getImposto(Funcionario Funcionario) {
         if (Funcionario.getSalario() <= 2428.80 && Funcionario.getSalario() > 0) {
@@ -87,6 +61,13 @@ public class FuncionarioCtrl {
 
     public double gerSalarioLiquido(Funcionario Funcionario) {
         return Funcionario.getSalario() - getImposto(Funcionario);
+    }
+
+
+    public boolean apagar(int idFuncionario) {
+     
+        return dao.remover(idFuncionario);
+
     }
 }    
 
