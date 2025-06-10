@@ -2,35 +2,35 @@ package Projeto.dtos;
 
 import java.time.LocalDate;
 
-public class CompraListagemDTO {
+public class VendaListagemDTO {
     
-    private int idCompra;
+    private int idVenda;
     private String nomeFuncionario;
-    private LocalDate dataCompra;
+    private LocalDate dataVenda;
     private int qtdProdutos;
     private double valorFinal;
 
 
-    public CompraListagemDTO() {
+    public VendaListagemDTO() {
 
-        this.idCompra = 0;
+        this.idVenda = 0;
         this.nomeFuncionario = "";
-        this.dataCompra = null;
+        this.dataVenda = null;
         this.qtdProdutos = 0;
         this.valorFinal = 0;
 
     }
 
 
-    public void setIdCompra(int idCompra) {
+    public void setIdVenda(int idVenda) {
 
-        this.idCompra = idCompra;
+        this.idVenda = idVenda;
 
     }
 
-    public int getIdCompra() {
+    public int getIdVenda() {
 
-        return idCompra;
+        return idVenda;
 
     }
 
@@ -46,15 +46,15 @@ public class CompraListagemDTO {
 
     }
 
-    public void setDataCompra(LocalDate dataCompra) {
+    public void setDataVenda(LocalDate dataVenda) {
 
-        this.dataCompra = dataCompra;
+        this.dataVenda = dataVenda;
 
     }
 
-    public LocalDate getDataCompra() {
+    public LocalDate getDataVenda() {
 
-        return dataCompra;
+        return dataVenda;
 
     }
 
